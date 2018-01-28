@@ -33,9 +33,14 @@ int main() {
     pool->pile(threadMutex::t1);
     pool->pile(threadMutex::t2);
 
-    response = pool->flush();
+    response = pool->flushAll();
     
     printf("[ %s ]\n",response);
+
+    pool->pile(threadMutex::t1);
+    pool->pile(threadMutex::t1);
+
+    pool->bloc();
 
     pool->pile(threadMutex::t2);
     pool->pile(threadMutex::t1);
@@ -43,10 +48,31 @@ int main() {
     pool->pile(threadMutex::t1);
     pool->pile(threadMutex::t2);
 
-    response = pool->flush();
+    pool->bloc();
+
+    pool->pile(threadMutex::t1);
+    pool->pile(threadMutex::t1);
+
+    pool->bloc();
+
+    pool->pile(threadMutex::t2);
+    pool->pile(threadMutex::t2);
+
+    pool->bloc();
+
+    response = pool->flushPrevious();
+
+    printf("[ %s ]\n",response);
+
+    response =  pool->flushPrevious();
+
+    printf("[ %s ]\n",response);
+
+    response = pool->flushAll();
     
     printf("[ %s ]\n",response);
-    
+
+
     return 0;
 }
 
